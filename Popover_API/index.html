@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .popover::backdrop {
+        background-color: salmon;
+        opacity: 0.5;
+      }
+    </style>
+  </head>
+  <body>
+    <button popovertarget="ls-popover">Open popover</button>
+    <div id="ls-popover" popover>
+      <button popovertarget="ls-popover" popovertargetaction="hide">
+        <span>X</span>
+      </button>
+      I am a popover
+    </div>
+  </body>
+</html>

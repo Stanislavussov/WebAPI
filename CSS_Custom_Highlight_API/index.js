@@ -1,11 +1,9 @@
 const query = document.getElementById("query");
 const article = document.querySelector("article p");
-const queryClass = document.querySelector(".query");
 
 query.addEventListener("input", () => {
   if (!window.CSS || !CSS.highlights) {
-    article.textContent = "CSS Custom Highlight API not supported.";
-    return;
+    throw new Error("CSS Custom Highlight API is not supported.");
   }
 
   CSS.highlights.clear("results");
@@ -18,16 +16,17 @@ query.addEventListener("input", () => {
   const text = article.textContent.toLowerCase();
   const ranges = [];
   let startPos = 0;
-  let index = text.indexOf(searchString, startPos);
+  let startIndex = text.indexOf(searchString, startPos);
 
-  while (index !== -1) {
+  while (startIndex !== -1) {
     const range = new Range();
     const node = article.firstChild;
-    range.setStart(node, index);
-    range.setEnd(node, index + searchString.length);
+    const endIndex = startIndex + searchString.length;
+    range.setStart(node, startIndex);
+    range.setEnd(node, endIndex);
     ranges.push(range);
-    startPos = index + searchString.length;
-    index = text.indexOf(searchString, startPos);
+    startPos = endIndex;
+    startIndex = text.indexOf(searchString, startPos);
   }
 
   const searchResultsHighlight = new Highlight(...ranges.flat());
